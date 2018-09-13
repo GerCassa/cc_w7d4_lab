@@ -8,8 +8,8 @@ const MunrosListView = function (element) {
 MunrosListView.prototype.bindEvent = function () {
   PubSub.subscribe('Munros:all-ready', e => {
     // console.log(e.detail);
-    e.detal.forEach(munro => {
-      const munroView = new MunroView(e.detail);
+    e.detail.forEach(munro => {
+      const munroView = new MunroView(this.element, munro);
       munroView.render();
     })
   })
