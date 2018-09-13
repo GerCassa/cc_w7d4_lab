@@ -11,7 +11,13 @@ Munros.prototype.getData = function () {
     this.data = data;
     const regions = this.returnRegions()
     // console.log(data);
-    // PubSub.publish('Munros:all-ready', data);
+  })
+}
+
+Munros.prototype.bindEvent = function () {
+  PubSub.subscribe('FilterView:region', e => {
+    PubSub.publish('Munros:all-ready', this.filterMunros(e.detail));
+    // console.log(this.filterMunros(e.detail));
   })
 }
 
@@ -22,6 +28,10 @@ Munros.prototype.returnRegions = function () {
     .sort();
   // console.log(munroRegions);
   PubSub.publish('Munros:regions', munroRegions);
+}
+
+Munros.prototype.filterMunros = function (region) {
+  return this.data.filter(munro => munro.region === region)
 }
 
 module.exports = Munros;

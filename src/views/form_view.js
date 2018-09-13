@@ -9,11 +9,13 @@ FormView.prototype.bindEvent = function () {
   PubSub.subscribe('Munros:regions', e => {
     // console.log(e.detail);
     e.detail.forEach(region => {
-      createAndAppend('option', region, this.element);
+      const item = createAndAppend('option', region, this.element);
+      item.value = region;
     })
   })
 
   this.element.addEventListener('change', e => {
+    // console.log(e.target.value);
     PubSub.publish('FilterView:region', e.target.value);
   })
 }
